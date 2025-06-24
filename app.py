@@ -482,7 +482,6 @@ def enforce_unique_email():
     db.close()
 
         # Add other tables here if needed (projects, trades, etc.)
-        conn.commit()
 
 # ────────────── Run ──────────────
 if __name__ == "__main__":
