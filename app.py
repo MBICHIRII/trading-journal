@@ -480,17 +480,7 @@ def enforce_unique_email():
         print("ℹ️ Email already unique.")
     db.commit()
     db.close()
-def init_db():
-    with app.app_context():
-        conn = get_db()
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL
-            )
-        ''')
+
         # Add other tables here if needed (projects, trades, etc.)
         conn.commit()
 
