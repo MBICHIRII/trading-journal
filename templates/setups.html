@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block title %}Setups & Backtests{% endblock %}
+
+{% block content %}
+<h2>🔬 Backtested Setups</h2>
+<p><a href="{{ url_for('add_backtest_setup') }}">➕ Add Backtest Setup</a></p>
+
+{% if setups %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>📅 Date</th>
+      <th>📌 Title</th>
+      <th>⏱ Timeframe</th>
+      <th>🎯 Result</th>
+      <th>🖼 Screenshot</th>
+      <th>🔍 View</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in setups %}
+    <tr>
+      <td>{{ s.date }}</td>
+      <td>{{ s.title }}</td>
+      <td>{{ s.timeframe or "-" }}</td>
+      <td>{{ s.result or "-" }}</td>
+      <td>
+        {% if s.screenshots %}
+          <img src="{{ url_for('setup_screenshot', id=s.screenshots[0].id) }}"
+               style="height: 40px; cursor: zoom-in; border: 1px solid #ccc;"
+               onclick="expandImage(this.src)">
+        {% else %}
+          <span style="color: #94a3b8;">—</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('view_setup', setup_id=s.id) }}">🔍 View</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="color: #64748b;">No setups found.</p>
+{% endif %}
+
+<hr style="margin: 40px 0;">
+
+<h2>📈 Live Trade Setups (from Dashboard)</h2>
+{% if trades %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>📁 Project</th>
+      <th>📅 Date</th>
+      <th>💱 Symbol</th>
+      <th>🏁 Result</th>
+      <th>⚖️ R:R</th>
+      <th>🖼 Screenshot</th>
+      <th>🔍 View</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in trades %}
+    <tr>
+      <td>{{ t.project_name }}</td>
+      <td>{{ t.date }}</td>
+      <td>{{ t.symbol }}</td>
+      <td>{{ t.result }}</td>
+      <td>{{ t.rr or "-" }}</td>
+      <td>
+        {% if t.screenshot %}
+          <img src="{{ url_for('screenshot', trade_id=t.id) }}"
+               style="height: 40px; cursor: zoom-in; border: 1px solid #ccc;"
+               onclick="expandImage(this.src)">
+        {% else %}
+          <span style="color: #94a3b8;">—</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('view_live_trade', trade_id=t.id) }}">🔍 View</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="color: #64748b;">No live trades found.</p>
+{% endif %}
+{% endblock %}

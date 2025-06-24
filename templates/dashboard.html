@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+
+  <h2>📊 Dashboard – Your Trades</h2>
+
+  <!-- Summary Stats Section -->
+  <div class="dashboard-summary">
+    <div class="stat-box">📈 Total Trades: <strong>{{ total_trades }}</strong></div>
+    <div class="stat-box">✅ Wins: <strong>{{ total_wins }}</strong></div>
+    <div class="stat-box">❌ Losses: <strong>{{ total_losses }}</strong></div>
+    <div class="stat-box">📊 Win Rate: <strong>{{ win_rate }}%</strong></div>
+    <div class="stat-box">💰 Net P/L: <strong>{{ net_profit }}</strong></div>
+    <div class="stat-box">📏 Avg Profit: <strong>{{ avg_profit }}</strong></div>
+    <div class="stat-box">🎯 Avg R:R: <strong>{{ avg_rr }}</strong></div>
+  </div>
+
+  <a href="{{ url_for('add_trade') }}" class="btn">➕ Add Trade</a>
+
+  {% if trades %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Symbol</th>
+          <th>Direction</th>
+          <th>Entry</th>
+          <th>Exit</th>
+          <th>Lot Size</th>
+          <th>P/L</th>
+          <th>Screenshot</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in trades %}
+        <tr>
+          <td>{{ t.date }}</td>
+          <td>{{ t.symbol }}</td>
+          <td>{{ t.direction }}</td>
+          <td>{{ t.entry }}</td>
+          <td>{{ t.exit }}</td>
+          <td>{{ t.lot_size or '-' }}</td>
+          <td>{{ t.pl or t.profit }}</td>
+          <td>
+            {% if t.screenshot %}
+              <a href="{{ url_for('screenshot', trade_id=t.id) }}" target="_blank">🖼 View</a>
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('edit_trade', tid=t.id) }}">✏️</a>
+          </td>
+          <td>
+            <form method="POST" action="{{ url_for('delete_trade', tid=t.id) }}" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+              <button type="submit" title="Delete">🗑</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No trades found. Click "Add Trade" to begin.</p>
+  {% endif %}
+</div>
+{% endblock %}

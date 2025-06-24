@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+<h2>👨‍💻 Admin Panel</h2>
+<p>Total users: {{ users|length }}</p>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Role</th>
+  </tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.id }}</td>
+    <td>{{ u.username }}</td>
+    <td>{{ u.role }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

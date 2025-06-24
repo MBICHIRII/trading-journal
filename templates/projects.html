@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<h1>My Projects</h1>
+<a href="{{ url_for('add_project') }}">➕ Add Project</a><br><br>
+
+{% if projects %}
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Name</th><th>Category</th><th>Actions</th>
+  </tr>
+  {% for p in projects %}
+  <tr>
+    <td>{{ p.name }}</td>
+    <td>{{ p.category }}</td>
+    <td>
+      <a href="{{ url_for('open_project', pid=p.id) }}">Open</a> |
+      <a href="{{ url_for('edit_project', pid=p.id) }}">Edit</a> |
+      <form action="{{ url_for('delete_project', pid=p.id) }}" method="post" style="display:inline;">
+        <button type="submit" onclick="return confirm('Delete this project?')">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No projects yet.</p>
+{% endif %}
+{% endblock %}

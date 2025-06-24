@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Add Project{% endblock %}
+
+{% block content %}
+<h2>Add Project</h2>
+
+<form method="POST">
+  <label>Project Name:
+    <input type="text" name="name" required>
+  </label>
+
+  <label>Category:
+    <select name="category" required>
+      <option value="PROP FIRMS">PROP FIRMS</option>
+      <option value="PERSONAL CAPITAL">PERSONAL CAPITAL</option>
+      <option value="TURNS">TURNS</option>
+    </select>
+  </label>
+
+  <button type="submit" class="btn">➕ Add Project</button>
+</form>
+
+<p><a href="{{ url_for('select_project') }}">← Back to Projects</a></p>
+{% endblock %}

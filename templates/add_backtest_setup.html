@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}➕ Add Backtest Setup{% endblock %}
+
+{% block content %}
+<h2>➕ Add Backtest Setup</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <label>Date:</label>
+  <input type="date" name="date" required><br>
+
+  <label>Symbol:</label>
+  <input type="text" name="title" required><br>
+
+  <label>Market Direction:</label>
+  <input type="text" name="market" placeholder="e.g., Bullish, Bearish"><br>
+
+  <label>Strategy:</label>
+  <input type="text" name="strategy"><br>
+
+  <label>Entry Notes:</label>
+  <textarea name="entry_notes"></textarea><br>
+
+  <label>Entry Criteria:</label>
+  <textarea name="entry_criteria"></textarea><br>
+
+  <label>Exit Criteria:</label>
+  <textarea name="exit_criteria"></textarea><br>
+
+  <label>Result:</label>
+  <select name="result">
+    <option value="">-- Select --</option>
+    <option value="Win">Win</option>
+    <option value="Loss">Loss</option>
+    <option value="Break-even">Break-even</option>
+  </select><br>
+
+  <label>Review Notes:</label>
+  <textarea name="review_notes"></textarea><br>
+
+  <label>Screenshots:</label>
+  <input type="file" name="screenshots" multiple><br><br>
+
+  <button type="submit">💾 Save Setup</button>
+</form>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>➕ Add Trade</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <label>Date:</label>
+  <input type="date" name="date" required><br>
+
+  <label>Symbol:</label>
+  <input type="text" name="symbol" required><br>
+
+  <label>Direction:</label>
+  <select name="direction">
+    <option value="Buy">Buy</option>
+    <option value="Sell">Sell</option>
+  </select><br>
+
+  <label>Entry:</label>
+  <input type="number" name="entry" step="any" required><br>
+
+  <label>Exit:</label>
+  <input type="number" name="exit" step="any" required><br>
+
+  <label>Lot Size:</label>
+  <input type="number" name="lot_size" step="any"><br>
+
+  <label>RR:</label>
+  <input type="text" name="rr"><br>
+
+  <label>Session:</label>
+  <input type="text" name="session"><br>
+
+  <label>Strategy:</label>
+  <input type="text" name="strategy"><br>
+
+  <label>Timeframe:</label>
+  <input type="text" name="timeframe"><br>
+
+  <label>Result:</label>
+  <select name="result">
+    <option value="Win">Win</option>
+    <option value="Loss">Loss</option>
+    <option value="BE">Break-even</option>
+  </select><br>
+
+  <label>Profit:</label>
+  <input type="number" name="profit" step="any"><br>
+
+  <label>Notes:</label>
+  <textarea name="notes"></textarea><br>
+
+  <label>Screenshot:</label>
+  <input type="file" name="screenshot"><br><br>
+
+  <button type="submit">Save</button>
+</form>
+{% endblock %}

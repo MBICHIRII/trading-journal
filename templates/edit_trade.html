@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}Edit Trade{% endblock %}
+
+{% block content %}
+<h2>Edit Trade</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <label>Date:
+    <input type="date" name="date" value="{{ trade.date }}" required>
+  </label>
+
+  <label>Symbol:
+    <input name="symbol" value="{{ trade.symbol }}" required>
+  </label>
+
+  <label>Direction:
+    <select name="direction">
+      <option value="Buy" {% if trade.direction == 'Buy' %}selected{% endif %}>Buy</option>
+      <option value="Sell" {% if trade.direction == 'Sell' %}selected{% endif %}>Sell</option>
+    </select>
+  </label>
+
+  <label>Lot Size:
+    <input type="number" step="0.01" name="lot_size" value="{{ trade.lot_size }}" required>
+  </label>
+
+  <label>Entry:
+    <input type="number" step="0.0001" name="entry" value="{{ trade.entry }}" required>
+  </label>
+
+  <label>Exit:
+    <input type="number" step="0.0001" name="exit" value="{{ trade.exit }}" required>
+  </label>
+
+  <label>R:R:
+    <input type="number" step="0.01" name="rr" value="{{ trade.rr }}">
+  </label>
+
+  <label>Session:
+    <select name="session">
+      <option value="" {% if not trade.session_name %}selected{% endif %}>--</option>
+      {% for s in ['London','New York','Asian'] %}
+        <option value="{{ s }}" {% if trade.session_name == s %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Result:
+    <select name="result">
+      <option value="" {% if not trade.result %}selected{% endif %}>--</option>
+      {% for r in ['Win','Loss','BE'] %}
+        <option value="{{ r }}" {% if trade.result == r %}selected{% endif %}>{{ r }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Profit:
+    <input type="number" step="0.01" name="profit" value="{{ trade.profit }}">
+  </label>
+
+  <label>Notes:
+    <textarea name="notes" rows="3">{{ trade.notes }}</textarea>
+  </label>
+
+  <label>Replace Screenshot:
+    <input type="file" name="screenshot" accept="image/*">
+  </label>
+
+  <button type="submit" class="btn">💾 Save Changes</button>
+</form>
+
+<p><a href="{{ url_for('dashboard') }}">← Back to Dashboard</a></p>
+{% endblock %}

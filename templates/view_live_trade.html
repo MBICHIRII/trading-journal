@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Live Trade View{% endblock %}
+
+{% block content %}
+<h2>📈 Live Trade Details</h2>
+
+<table style="width: 100%; max-width: 700px; border-collapse: collapse; margin-top: 20px;">
+  <tr><td><strong>📌 Project</strong></td><td>{{ trade.project_name }}</td></tr>
+  <tr><td><strong>📅 Date</strong></td><td>{{ trade.date }}</td></tr>
+  <tr><td><strong>💹 Symbol</strong></td><td>{{ trade.symbol }}</td></tr>
+  <tr><td><strong>🔁 Direction</strong></td><td>{{ trade.direction }}</td></tr>
+  <tr><td><strong>🎯 Result</strong></td><td>{{ trade.result }}</td></tr>
+  <tr><td><strong>📏 RR</strong></td><td>{{ trade.rr }}</td></tr>
+  <tr><td><strong>💬 Notes</strong></td><td>{{ trade.notes or "-" }}</td></tr>
+  <tr>
+    <td><strong>🖼 Screenshot</strong></td>
+    <td>
+      {% if trade.screenshot %}
+        <img src="{{ url_for('screenshot', trade_id=trade.id) }}"
+             onclick="expandImage(this.src)"
+             style="max-height: 120px; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
+      {% else %}
+        <span style="color: #94a3b8;">—</span>
+      {% endif %}
+    </td>
+  </tr>
+</table>
+
+<a href="{{ url_for('setups') }}" style="display: inline-block; margin-top: 20px;">← Back to Setups</a>
+
+<!-- Modal -->
+<div id="imageModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85);">
+  <span onclick="closeModal()" style="position:absolute; top:20px; right:30px; font-size:36px; color:white; cursor:pointer;">×</span>
+  <img id="modalImg" style="display:block; margin:auto; max-width:90%; max-height:90%; margin-top:40px;">
+</div>
+
+<script>
+function expandImage(src) {
+  document.getElementById("modalImg").src = src;
+  document.getElementById("imageModal").style.display = "block";
+}
+function closeModal() {
+  document.getElementById("imageModal").style.display = "none";
+}
+</script>
+{% endblock %}

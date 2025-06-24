@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}View Setup{% endblock %}
+
+{% block content %}
+<h2>📌 {{ setup.title }}</h2>
+<p><strong>Date:</strong> {{ setup.date }}</p>
+<p><strong>Timeframe:</strong> {{ setup.timeframe or "-" }}</p>
+<p><strong>Market:</strong> {{ setup.market or "-" }}</p>
+<p><strong>Session:</strong> {{ setup.session_name or "-" }}</p>
+<p><strong>R-Multiple:</strong> {{ setup.r_multiple or "-" }}</p>
+<p><strong>Profit:</strong> {{ setup.profit or "-" }}</p>
+<p><strong>Result:</strong> {{ setup.result or "-" }}</p>
+
+<hr>
+
+<h3>📥 Entry Notes</h3>
+<p style="white-space: pre-wrap;">{{ setup.entry_notes or "-" }}</p>
+
+<h3>📝 Review Notes</h3>
+<p style="white-space: pre-wrap;">{{ setup.review_notes or "-" }}</p>
+
+<h3>✅ Entry Criteria</h3>
+<p style="white-space: pre-wrap;">{{ setup.entry_criteria or "-" }}</p>
+
+<h3>❌ Exit Criteria</h3>
+<p style="white-space: pre-wrap;">{{ setup.exit_criteria or "-" }}</p>
+
+<h3>🖼 Screenshots</h3>
+{% if screenshots %}
+  <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    {% for shot in screenshots %}
+      <img src="{{ url_for('setup_screenshot', id=shot.id) }}"
+           style="height: 80px; cursor: zoom-in; border: 1px solid #ccc;"
+           onclick="expandImage(this.src)">
+    {% endfor %}
+  </div>
+{% else %}
+  <p style="color: #94a3b8;">No screenshots attached.</p>
+{% endif %}
+
+<hr>
+
+<a href="{{ url_for('edit_setup', setup_id=setup.id) }}" style="margin-right: 15px;">✏️ Edit</a>
+<a href="{{ url_for('setups') }}">← Back to Setups</a>
+{% endblock %}

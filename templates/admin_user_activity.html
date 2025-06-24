@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}User Activity - {{ user.username }}{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">📊 Activity for <span class="text-blue-600 font-semibold">{{ user.username }}</span></h2>
+
+<!-- ──────────────── Trades Section ──────────────── -->
+<h3 class="text-xl font-semibold mt-6 mb-2">📈 Trades</h3>
+{% if trades %}
+<table class="table-auto w-full border mb-6 text-sm">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="px-2 py-1">Date</th>
+      <th class="px-2 py-1">Project</th>
+      <th class="px-2 py-1">Symbol</th>
+      <th class="px-2 py-1">Dir</th>
+      <th class="px-2 py-1">Entry</th>
+      <th class="px-2 py-1">Exit</th>
+      <th class="px-2 py-1">Result</th>
+      <th class="px-2 py-1">Profit</th>
+      <th class="px-2 py-1">Screenshot</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in trades %}
+    <tr class="border-t">
+      <td class="px-2 py-1">{{ t.date }}</td>
+      <td class="px-2 py-1">{{ t.project_name }}</td>
+      <td class="px-2 py-1">{{ t.symbol }}</td>
+      <td class="px-2 py-1">{{ t.direction }}</td>
+      <td class="px-2 py-1">{{ t.entry }}</td>
+      <td class="px-2 py-1">{{ t.exit }}</td>
+      <td class="px-2 py-1">{{ t.result }}</td>
+      <td class="px-2 py-1">{{ t.profit }}</td>
+      <td class="px-2 py-1">
+        {% if t.screenshot %}
+        <a href="{{ url_for('screenshot', trade_id=t.id) }}" target="_blank" class="text-blue-600 underline">View</a>
+        {% else %}
+        <span class="text-gray-400">None</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-gray-500 italic mb-4">No trades recorded.</p>
+{% endif %}
+
+<!-- ──────────────── Setups Section ──────────────── -->
+<h3 class="text-xl font-semibold mt-8 mb-2">🧪 Backtest Setups</h3>
+{% if setups %}
+<table class="table-auto w-full border text-sm">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="px-2 py-1">Date</th>
+      <th class="px-2 py-1">Title</th>
+      <th class="px-2 py-1">Result</th>
+      <th class="px-2 py-1">Profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in setups %}
+    <tr class="border-t">
+      <td class="px-2 py-1">{{ s.date }}</td>
+      <td class="px-2 py-1">{{ s.title }}</td>
+      <td class="px-2 py-1">{{ s.result }}</td>
+      <td class="px-2 py-1">{{ s.profit or '–' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-gray-500 italic">No backtest setups logged.</p>
+{% endif %}
+
+<a href="{{ url_for('admin_panel') }}" class="inline-block mt-6 text-blue-600 underline text-sm">← Back to Admin Panel</a>
+{% endblock %}

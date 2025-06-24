@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Trading Journal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% if session.user_id %}
+    <nav class="navbar">
+      <a href="{{ url_for('select_project') }}">Projects</a>
+      <a href="{{ url_for('setups') }}">Setups</a>
+      {% if session.get('role') == 'admin' %}
+        <a href="{{ url_for('admin_panel') }}">Admin</a>
+      {% endif %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  {% endif %}
+
+  <div class="container">
+    {% with msgs = get_flashed_messages() %}
+      {% if msgs %}
+        <div class="flash">
+          {% for m in msgs %}<p>{{ m }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- ✅ Reusable Zoom Modal for All Images -->
+  <div id="imageModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85);">
+    <span onclick="closeModal()" style="position:absolute; top:20px; right:30px; font-size:36px; color:white; cursor:pointer;">×</span>
+    <img id="modalImg" style="display:block; margin:auto; max-width:90%; max-height:90%; margin-top:40px;">
+  </div>
+
+  <script>
+    function expandImage(src) {
+      document.getElementById("modalImg").src = src;
+      document.getElementById("imageModal").style.display = "block";
+    }
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>

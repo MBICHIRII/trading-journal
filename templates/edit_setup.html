@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Setup</title>
+<style>
+ body{font-family:Segoe UI,Arial;background:#f3f4f6;margin:0}
+ nav{background:#1f2937;color:#fff;padding:15px 30px;text-align:right}
+ nav a{color:#fff;text-decoration:none;font-weight:600}
+ .box{max-width:500px;margin:50px auto;background:#fff;padding:30px;border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,0.05)}
+ label{display:block;margin-top:15px;font-weight:600}
+ input,select,textarea{width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px;margin-top:5px;font-size:14px}
+ button{margin-top:25px;width:100%;padding:10px;background:#2563eb;color:#fff;border:none;border-radius:6px;font-weight:600;font-size:15px}
+</style>
+</head>
+<body>
+<nav><a href="{{ url_for('setups') }}">← Back to Setups</a></nav>
+<div class="box">
+<h2 style="margin-top:0">Edit Setup</h2>
+<form method="post" enctype="multipart/form-data">
+  <label>Title</label><input type="text" name="title" value="{{ setup[1] }}">
+  <label>Pattern</label><input type="text" name="pattern" value="{{ setup[2] }}">
+  <label>Timeframe</label><input type="text" name="timeframe" value="{{ setup[3] }}">
+  <label>Rating (1-5)</label><input type="number" name="rating" min="1" max="5" value="{{ setup[4] }}">
+  <label>Pre-trade Notes</label><textarea name="pre_notes" rows="3">{{ setup[5] }}</textarea>
+  <label>Post-trade Notes</label><textarea name="post_notes" rows="3">{{ setup[6] }}</textarea>
+  <label>Replace Screenshot</label><input type="file" name="screenshot" accept="image/*">
+  <button type="submit">Update Setup</button>
+</form>
+</div>
+</body>
+</html>
